@@ -8,7 +8,7 @@ Este proyecto es una herramienta en Python que permite leer gramáticas desde un
 - Python 3.12.3
 - Librerías:
     - `networkx`
-    - `matplotlib`
+    - `pygraphviz`
 
 Puedes instalarlas ejecutando:
 
