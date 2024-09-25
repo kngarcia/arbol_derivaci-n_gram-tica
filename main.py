@@ -133,12 +133,10 @@ def generar_arbol_frase(G, reglas, frase, simbolo, padre=None, frase_actual=None
 
 # Función para visualizar el árbol
 def visualizar_arbol(G):
-    pos = nx.spring_layout(G)
-    labels = nx.get_node_attributes(G, 'label')
-    nx.draw(G, pos, labels=labels, with_labels=True, node_color='lightblue', font_size=10, font_weight='bold', node_size=1500)
-    plt.savefig('arbol_frase.png')  # Guardar el gráfico en un archivo PNG
+    A = nx.nx_agraph.to_agraph(G)
+    A.layout('dot')  # Usar el layout 'dot' para obtener una forma de árbol
+    A.draw('arbol_frase.png')  # Guardar el gráfico en un archivo PNG
     print("El árbol ha sido guardado como 'arbol_frase.png'")
-
 # Programa principal
 def main():
     archivo_gramatica = 'gramatica.txt'  # Archivo por defecto
