@@ -1,7 +1,7 @@
 
 # Generador de Árboles de Derivación a partir de Gramáticas
 
-Este proyecto es una herramienta en Python que permite leer gramáticas desde un archivo, validar la sintaxis de la gramática, y generar un árbol de derivación para una frase específica basada en las reglas definidas. Usa la librería `networkx` para la representación gráfica del árbol y `matplotlib` para la visualización.
+Este proyecto es una herramienta en Python que permite leer gramáticas desde un archivo, validar la sintaxis de la gramática, y generar un árbol de derivación para una frase específica basada en las reglas definidas. Usa la librería `networkx` para la representación gráfica del árbol y `pygraphviz` para la visualización.
 
 ## Requisitos
 
@@ -13,8 +13,14 @@ Este proyecto es una herramienta en Python que permite leer gramáticas desde un
 Puedes instalarlas ejecutando:
 
 ```bash
-pip install networkx matplotlib
+pip install networkx pygraphviz
 ```
+
+## Estructura del Proyecto
+
+`main.py`: Archivo principal que contiene la lógica del generador de árboles sintácticos.
+`gramatica(2).txt`: Archivo de texto que define las reglas de la gramática utilizada.
+`arbol_frase.png`: Imagen generada del árbol sintáctico (se generará al ejecutar el script).
 
 ## Funcionalidades
 
@@ -23,9 +29,11 @@ pip install networkx matplotlib
 La función `leer_gramatica_validando(archivo)` lee un archivo de texto que contiene reglas de gramática en formato:
 
 ```css
-A -> B C | D
-B -> b
-C -> c
+E  -> T E'
+E' -> + T E' | - T E' | ε
+T  -> F T'
+T' -> * F T' | / F T' | ^ F T' | ε
+F  -> id | num | ( E )
 ```
 
 - Soporta reglas con alternativas separadas por `|`.
@@ -54,14 +62,17 @@ El programa principal se ejecuta desde la línea de comandos. Lee el archivo de 
 Debes ejecutar el programa desde la línea de comandos, especificando el archivo de gramática y la frase a derivar como argumentos:
 
 ```bash
-python script.py gramatica.txt frase_a_derivar
+python script.py gramatica.txt "frase_a_derivar"
 ```
 
 #### Ejemplo:
 
 ```bash
-python script.py gramatica.txt b c
+python script.py gramatica.txt "id + id"
 ```
+La frase debe ir entre comillas dobles ("") o simples (''). Y cada simbolo debe ir espaciado es decir, si se quiere probar
+la gramática del archivo `gramatica2.txt`que acepta frases con parentesis `()`este debe ser pasado como argumento de la sigueinte 
+forma: `"( id + (id * num) )"
 
 Si no se pasa una frase, el programa dará un error y pedirá que se ingrese una frase.
 
