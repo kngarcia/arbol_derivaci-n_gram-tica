@@ -1,4 +1,4 @@
-# Lexer en Python
+# Árbol de Derivación & Gramáticas en Python
 
 ## Integrantes del grupo:
   - Camilo López
