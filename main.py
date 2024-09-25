@@ -71,64 +71,50 @@ def generar_arbol_frase(G, reglas, frase, simbolo, padre=None, frase_actual=None
     if frase_actual is None:
         frase_actual = []
 
-    # Limitar la profundidad para evitar recursión infinita
     if profundidad > limite_profundidad:
         print(f"Excedido el límite de profundidad ({limite_profundidad})")
         return False
 
-    # Verificar si hemos generado la frase completa
     if len(frase_actual) == len(frase):
-        print(f"Frase generada: {frase_actual} (Simbolo: {simbolo})")
         return frase_actual == frase
 
-    # Crear nodo único para cada símbolo (ya sea terminal o no terminal)
-    nodo_id[0] += 1  # Incrementar el contador para cada nuevo nodo
-    nodo_actual = f"{simbolo}_{nodo_id[0]}"  # Nodo único basado en el símbolo y su ID
+    nodo_id[0] += 1
+    nodo_actual = f"{simbolo}_{nodo_id[0]}"
     G.add_node(nodo_actual, label=simbolo)
     if padre:
         G.add_edge(padre, nodo_actual)
 
-    # Si el símbolo es un no terminal, intentamos expandirlo
     if simbolo in reglas:
-        print(f"Expandiendo no-terminal: {simbolo}, Producción actual: {reglas[simbolo]}")
         for produccion in reglas[simbolo]:
-            nueva_frase_actual = frase_actual.copy()  # Copiamos la frase actual antes de expandir
+            nueva_frase_actual = frase_actual.copy()
             simbolos_expandidos = True
 
-            # Verificar si el primer sub-símbolo coincide con el siguiente símbolo de la frase
-            if len(nueva_frase_actual) < len(frase):
-                primer_sub_simbolo = produccion[0]
-
-                # Si el primer símbolo es terminal, debe coincidir con la frase
-                if primer_sub_simbolo not in reglas and primer_sub_simbolo != frase[len(nueva_frase_actual)]:
-                    print(f"Saltando producción {produccion} ya que el primer símbolo no coincide con {frase[len(nueva_frase_actual)]}")
-                    continue  # Si no coincide, no expandir esta producción
-
-            # Para cada sub símbolo en la producción, intentamos expandir
             for sub_simbolo in produccion:
-                print(f"Sub-simbolo: {sub_simbolo}, Frase actual: {nueva_frase_actual}")
                 if sub_simbolo == 'ε':
-                    continue  # No hacer nada con epsilon
+                    continue
 
-                # Expandir sub-símbolos
+                if len(nueva_frase_actual) < len(frase):
+                    if sub_simbolo not in reglas and sub_simbolo != frase[len(nueva_frase_actual)]:
+                        simbolos_expandidos = False
+                        break
+
                 if not generar_arbol_frase(G, reglas, frase, sub_simbolo, nodo_actual, nueva_frase_actual, profundidad + 1, limite_profundidad, nodo_id):
                     simbolos_expandidos = False
-                    break  # Cancelar esta producción si algún sub-símbolo no puede expandirse
+                    break
 
-            # Si la producción fue válida
             if simbolos_expandidos:
-                frase_actual[:] = nueva_frase_actual  # Actualizamos la frase actual
-                return True  # Derivado correctamente
+                frase_actual[:] = nueva_frase_actual
+                return True
 
     else:
-        # Si el símbolo es terminal, verificar que coincida con el siguiente símbolo en la frase
         if len(frase_actual) < len(frase) and simbolo == frase[len(frase_actual)]:
-            frase_actual.append(simbolo)  # Añadir el terminal a la frase actual
-            print(f"Terminal encontrado: {simbolo}, Frase actual: {frase_actual}")
+            frase_actual.append(simbolo)
             return True
-        return False
 
-    return False  # Si ninguna producción pudo derivar la frase
+    return False
+
+
+
 
 # Función para visualizar el árbol
 def visualizar_arbol(G):
@@ -136,18 +122,23 @@ def visualizar_arbol(G):
     A.layout('dot')  # Usar el layout 'dot' para obtener una forma de árbol
     A.draw('arbol_frase.png')  # Guardar el gráfico en un archivo PNG
     print("El árbol ha sido guardado como 'arbol_frase.png'")
+
+
 # Programa principal
 def main():
     archivo_gramatica = 'gramatica.txt'  # Archivo por defecto
     frase = []  # Aquí va la frase a derivar
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 1:
         archivo_gramatica = sys.argv[1]
         frase = sys.argv[2:]  # Frase a derivar pasada como argumentos
 
     if not frase:
         print("Por favor, ingresa una frase para derivar.")
         sys.exit(1)
+
+    # Si la frase está entre comillas, la unimos
+    frase = ' '.join(frase).strip('"').split()  # Une y separa por espacios
 
     try:
         reglas, terminales, no_terminales = leer_gramatica_validando(archivo_gramatica)
@@ -171,5 +162,5 @@ def main():
     print(f"Terminales: {terminales}")
     print(f"No terminales: {no_terminales}")
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     main()
