@@ -23,6 +23,15 @@ Puedes instalarlas ejecutando:
 pip install networkx pygraphviz
 ```
 
+## Configuración del Entorno
+Virtual Environment (opcional pero recomendado)
+Es recomendable crear un entorno virtual para evitar conflictos de dependencias. Puedes crear y activar un entorno virtual usando los siguientes comandos:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
 ## Estructura del Proyecto
 
 `main.py`: Archivo principal que contiene la lógica del generador de árboles sintácticos.
