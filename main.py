@@ -41,6 +41,14 @@ def leer_gramatica_validando(archivo):
 
                 for produccion in producciones:
                     simbolos = produccion.strip().split()
+
+                    # Validar paréntesis en la producción
+                    paren_abiertos = simbolos.count('(')
+                    paren_cerrados = simbolos.count(')')
+                    if paren_abiertos != paren_cerrados:
+                        print(f"Error: La producción '{produccion.strip()}' tiene un número desbalanceado de paréntesis.")
+                        continue
+
                     reglas[lado_izq].append(simbolos)
 
                     # Clasificar terminales
