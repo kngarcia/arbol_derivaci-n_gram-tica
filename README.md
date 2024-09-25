@@ -77,9 +77,9 @@ python script.py gramatica.txt "frase_a_derivar"
 ```bash
 python script.py gramatica.txt "id + id"
 ```
-La frase debe ir entre comillas dobles ("") o simples (''). Y cada simbolo debe ir espaciado es decir, si se quiere probar
-la gramática del archivo `gramatica2.txt`que acepta frases con parentesis `()`este debe ser pasado como argumento de la sigueinte 
-forma: `"( id + (id * num) )"
+La frase debe ir entre comillas dobles `("")` o simples `('')`. Cada simbolo debe ir espaciado, es decir, si se quiere probar
+la gramática del archivo `gramatica2.txt` que acepta frases con parentesis `()` este debe ser pasado como argumento de la siguiente 
+forma: `"( id + (id * num) )"`
 
 Si no se pasa una frase, el programa dará un error y pedirá que se ingrese una frase.
 
