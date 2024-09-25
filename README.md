@@ -1,3 +1,10 @@
+# Lexer en Python
+
+## Integrantes del grupo:
+  - Camilo López
+  - Juan Josá Márquez
+  - Kevin García
+  - Miguel Fernández
 
 # Generador de Árboles de Derivación a partir de Gramáticas
 
