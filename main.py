@@ -1,6 +1,5 @@
 import sys
 import networkx as nx
-import matplotlib.pyplot as plt
 
 # Función para leer el archivo de gramática validando
 def leer_gramatica_validando(archivo):
