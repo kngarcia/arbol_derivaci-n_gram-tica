@@ -20,7 +20,8 @@ Este proyecto es una herramienta en Python que permite leer gramáticas desde un
 Puedes instalarlas ejecutando:
 
 ```bash
-sudo apt-get install graphviz graphviz-dev```
+sudo apt-get install graphviz graphviz-dev
+```
 
 
 ```bash
